@@ -12,12 +12,18 @@ This is a simple .Net Core 2.1 Web MVC to demonstrate how Cosmos DB can be used 
 - Change the settings in the app.json file
 - Run the application
 
+## References
+
+I added the following references to the MVC project:
+
+- Microsoft.Azure.Cosmos
+
 ## Code to notice
 
 - Add the Cosmos Cache provider
 
 ```c#
-# Startup.cs
+// Startup.cs
 services.AddCosmosCache((CosmosCacheOptions cacheOptions) =>
 {
     cacheOptions.ContainerName = Configuration["CosmosCacheContainer"];
@@ -39,19 +45,21 @@ services.AddSession(options =>
 - Test the cosmos cache provider
 
 ```c#
+// IndexController.cs
 public IActionResult Index()
 {
-    // Add item to session
+    // Put data into Gache
     HttpContext.Session.SetString(SessionKeyName, "Sample Value");
     return View();
 }
 
-// Cache the response for two seconds
+// cache the response
 [ResponseCache(Duration = 2)]
 public IActionResult SayTime()
 {
     if (string.IsNullOrEmpty(HttpContext.Session.GetString(SessionKeyName)))
     {
+        // Get data from Session
         ViewData["Data"] = HttpContext.Session.GetString(SessionKeyName);
         HttpContext.Session.SetString(SessionKeyName, "The Doctor");
     }
