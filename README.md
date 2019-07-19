@@ -26,15 +26,15 @@ services.AddCosmosCache((CosmosCacheOptions cacheOptions) =>
     cacheOptions.CreateIfNotExists = true;
 });
 
-> Note: The AddCosmosCache services comes from the following link:<br/>https://github.com/Azure/Microsoft.Extensions.Caching.Cosmos
-
-
 services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromSeconds(3600);
     options.Cookie.IsEssential = true;
 });
 ```
+
+> Note: The AddCosmosCache services comes from the following link:<br/>https://github.com/Azure/Microsoft.Extensions.Caching.Cosmos
+
 
 - Test the cosmos cache provider
 
